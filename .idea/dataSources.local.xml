@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="hibernate.cfg.xml/Hibernate" uuid="ce3a3fa1-a421-4262-bcec-c3b0f5754a19">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <first-sync>true</first-sync>
+      <user-name>root</user-name>
+      <user-password>dfc0dfcedfc8dfc9df90dfc7dfd3dfd9dfdbdfc6df90df85df85df9bdf98df9ddf84df9adf84df9adf84df9bdf90df99df99df9adf9cdf85dfc4dfdddfd9df95dfc9dfd8dfcfdfcbdfdedfcfdfeedfcbdfdedfcbdfc8dfcbdfd9dfcfdfe3dfccdfe4dfc5dfdedfefdfd2dfc3dfd9dfdedf97dfdedfd8dfdfdfcf</user-password>
+    </data-source>
+  </component>
+</project>

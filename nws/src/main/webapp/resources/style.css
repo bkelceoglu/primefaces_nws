@@ -1,0 +1,42 @@
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.center-borner-none {
+    position: relative;
+    border: none;
+    vertical-align: top;
+}
+
+.ui-widget-content {
+    align-items: center;
+    vertical-align: top;
+    /*border: hidden;*/
+
+}
+
+.ui-panel-content .ui-widget-content {
+    align-items: center;
+    vertical-align: top;
+
+}
+
+/* .ui-panel.ui-widget.ui-widget-content.ui-corner-all { */
+/* 	border: 1px; */
+/* 	border-style: solid; */
+/* 	border-color: inherit; */
+/* } */
+
+.ui-panelgrid .ui-panelgrid-cell {
+    border-width: 1px;
+    border-style: hidden;
+    border-color: inherit;
+    padding-top: 4px;
+}
+
+/* .ui-layout-center { */
+/* 	border-style: hidden; */
+/* } */

@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <p:panel>
+        <h:form id="upcoming">
+            <h:panelGrid columns="1" id="votegrid" style="width: 100%">
+                <p:messages for="voteartist" id="messages" showDetail="true" autoUpdate="true"
+                            closable="true"/>
+                <p:selectOneMenu id="artist"
+                                 value="#{voteController.artistNameSurname}" style="width: 100%">
+                    <f:selectItem itemLabel="Select Artist" noSelectionOption="true"></f:selectItem>
+                    <f:selectItems value="#{voteController.artistListUserName}"></f:selectItems>
+                </p:selectOneMenu>
+                <p:commandButton update="votegrid"
+                                 actionListener="#{voteController.saveVote()}" value="VOTE ONE"
+                                 style="width: 100%" process="@form"/>
+            </h:panelGrid>
+        </h:form>
+    </p:panel>
+
+    <p:panel>
+        <h:form id="fanform">
+            <h:panelGrid columns="1" id="fangrid" style="width: 100%">
+                <p:messages for="fanartist" id="fanmessages" showDetail="true" autoUpdate="true"
+                            closable="true"/>
+                <p:selectOneMenu id="artist"
+                                 value="#{fanController.artistNameSurname}" style="width: 100%">
+                    <f:selectItem itemLabel="Be a Fan"
+                                  noSelectionOption="true"></f:selectItem>
+                    <f:selectItems value="#{voteController.artistListUserName}"></f:selectItems>
+                </p:selectOneMenu>
+                <p:commandButton update="fanmessages"
+                                 actionListener="#{fanController.saveFan()}" value="BE A FAN"
+                                 style="width: 100%" process="@form"/>
+            </h:panelGrid>
+        </h:form>
+    </p:panel>
+
+
+    <h:form id="newsfromus" style="padding-top: 5px">
+        <p:panel header="::News From Us::"
+                 rendered="#{not empty newsController.newsList}">
+            <ui:repeat value="#{newsController.newsList}" var="news">
+                <p:panelGrid columns="3">
+                    <h:outputText value="#{news.header}"></h:outputText>
+                    <h:outputText value="#{news.newskeywords}"></h:outputText>
+                    <p:commandButton value="Read More"
+                                     action="#{newsController.readnewsid(news.id)}" process="@form"></p:commandButton>
+                </p:panelGrid>
+            </ui:repeat>
+        </p:panel>
+        <p:panel rendered="#{empty newsController.newsList}"
+                 header="::News From Us::">
+            <h:outputText value="No News Lately Mate... Keep in touch"></h:outputText>
+        </p:panel>
+    </h:form>
+
+    <p:panel>
+        ADVERTISE HERE
+    </p:panel>
+
+</ui:composition>

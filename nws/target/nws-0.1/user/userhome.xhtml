@@ -1,0 +1,231 @@
+<ui:composition template="/WEB-INF/temps/maintemp.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="centerContent">
+
+
+        <p:messages id="messages" showDetail="true"
+                    closable="true" redisplay="false"/>
+        <c:choose>
+
+            <c:when test="#{not empty sessionScope['userObject'].username}">
+                <p:tabView dynamic="true" cache="false">
+                    <p:tab title="Your Events">
+                        <h:form>
+
+                            <p:dataTable id="userdatatable" paginator="true"
+                                         value="#{eventsController.fetchEventForUser( userController.username, userController.email )}"
+                                         var="userevents" editable="false"
+                                         sortBy="#{userevents.eventdate}" sortOrder="ASCENDING"
+                                         emptyMessage="No Events Found... Add Some...">
+                                <p:column id="eventname" headerText="Event Name">
+                                    <h:outputText value="#{userevents.eventname}"></h:outputText>
+                                </p:column>
+                                <p:column id="eventtype" headerText="Event Type">
+                                    <h:outputText value="#{userevents.eventtype}"></h:outputText>
+                                </p:column>
+                                <p:column id="eventdate" headerText="Event Date">
+                                    <h:outputText value="#{userevents.eventdate}"></h:outputText>
+                                </p:column>
+                                <p:column id="starttime" headerText="Event Starting">
+                                    <h:outputText value="#{userevents.starttime}"></h:outputText>
+                                </p:column>
+                                <p:column id="endtime" headerText="Event Ending">
+                                    <h:outputText value="#{userevents.endtime}"></h:outputText>
+                                </p:column>
+                                <p:column id="infoinfo" headerText="Additional Information">
+                                    <h:outputText value="#{userevents.information}"></h:outputText>
+                                </p:column>
+                                <p:column id="actions" headerText="Actions">
+                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"
+                                                     actionListener="#{eventsController.deleteEvent(userevents.eventid)}"
+                                                     update="userdatatable" ajax="true">
+                                        <p:confirm header="Please Confirm!!!"
+                                                   message="Are you sure to delete event?"
+                                                   icon="ui-icon-alert"></p:confirm>
+                                    </p:commandButton>
+                                    <p:commandButton id="performThisEvent" icon="ui-icon-microphone"
+                                                     actionListener="#{eventsController.performThisEvent(userevents.eventid)}"
+                                                     update="userdatatable" ajax="false">
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+
+                            <p:confirmDialog global="true" showEffect="fade"
+                                             hideEffect="fade">
+                                <p:commandButton value="Yes" type="button"
+                                                 styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                                <p:commandButton value="No" type="button"
+                                                 styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                            </p:confirmDialog>
+                        </h:form>
+                    </p:tab>
+                    <p:tab title="Add Event">
+                        <h:form>
+
+                            <p:growl id="addeventgrowl" life="3000" showDetail="false"/>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <f:facet name="header">
+                                    <h:outputText value="Add Your Event"/>
+                                </f:facet>
+
+                                <h:outputLabel for="eventdate" value="Choose Date"/>
+                                <p:calendar value="#{eventsController.startDate}"
+                                            required="true" pattern="MM/dd/yyyy" mask="true"
+                                            label="eventdate" styleClass="input-field" size="30"/>
+
+                                <h:outputLabel for="starttime" value="Start Time"/>
+                                <p:calendar value="#{eventsController.startTime}"
+                                            required="true" label="starttime" pattern="HH:mm" mask="true"
+                                            timeOnly="true" styleClass="input-field" size="30"/>
+
+                                <h:outputLabel for="endtime" value="End Time"/>
+                                <p:calendar value="#{eventsController.endTime}" required="true"
+                                            label="endtime" pattern="HH:mm" mask="true" timeOnly="true"
+                                            styleClass="input-field" size="30"/>
+
+                                <h:outputLabel for="event" value="Event"/>
+                                <p:inputText value="#{eventsController.eventName}"
+                                             maxlength="20" id="event" required="true" label="event"
+                                             styleClass="input-field" size="30">
+                                </p:inputText>
+
+                                <h:outputLabel for="eventtype" value="Event Type"/>
+                                <p:inputText value="#{eventsController.eventType}"
+                                             maxlength="20" id="eventtype" required="true" label="eventtype"
+                                             styleClass="input-field" size="30">
+                                </p:inputText>
+
+                                <h:outputLabel for="musicgenre" value="Music Genre"/>
+                                <p:inputText value="#{eventsController.musiceventGenre}"
+                                             maxlength="20" id="musicgenre" required="true"
+                                             label="eventtype" styleClass="input-field" size="30">
+                                </p:inputText>
+
+                                <h:outputLabel for="locationofevent" value="Location"/>
+                                <p:inputText value="#{eventsController.location}" maxlength="20"
+                                             id="locationofevent" required="true" label="locationofevent"
+                                             styleClass="input-field" size="30">
+                                </p:inputText>
+
+                                <h:outputLabel for="information" value="Additional Info"/>
+                                <p:inputTextarea value="#{eventsController.information}"
+                                                 id="information" maxlength="100" required="true"
+                                                 label="information" styleClass="textarea-field" cols="30"
+                                                 rows="5">
+                                </p:inputTextarea>
+                                <p:row></p:row>
+                                <p:row>
+                                    <p:column colspan="2">
+                                        <p:commandButton action="#{eventsController.addEventToDb()}"
+                                                         ajax="true" update="@all"
+                                                         value="Add Your Event"></p:commandButton>
+                                    </p:column>
+                                </p:row>
+
+                            </h:panelGrid>
+
+                        </h:form>
+                    </p:tab>
+
+                    <p:tab title="Manage Videos" id="managetab">
+                        <h:form id="videosForm">
+                            <p:dataTable editingRow="false" emptyMessage="No records found" id="videostable"
+                                         paginator="true" rows="10"
+                                         value="#{eventsController.fetchVideos('')}" var="videos">
+                                <p:column id="videoname" headerText="Video Name">
+                                    #{videos.videoname}
+                                </p:column>
+                                <p:column id="videolink" headerText="Video Link">
+                                    #{videos.videolink}
+                                </p:column>
+                                <p:column id="videoexp" headerText="Video Explanation">
+                                    #{videos.explanations}
+                                </p:column>
+                                <p:column id="delete" headerText="ACTIONS">
+                                    <p:commandButton icon="ui-icon-trash" process="@form" update="videostable"
+                                                     actionListener="#{eventsController.deleteVideo(videos.videosid)}">
+                                        <p:confirm header="Please Confirm!!!"
+                                                   message="Are you sure to delete event?"
+                                                   icon="ui-icon-alert"></p:confirm>
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <p:messages id="addvideomsg" showDetail="true"
+                                        closable="true" redisplay="false"/>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <f:facet name="header">
+                                    <h:outputText value="Add Your Video"/>
+                                </f:facet>
+
+                                <h:outputLabel for="videonamelabel" value="Video Name"/>
+                                <p:inputText value="#{eventsController.videoname}" maxlength="20"
+                                             id="videonameid" required="true" label="videonamelabel"
+                                             styleClass="input-field" size="30">
+                                </p:inputText>
+                                <h:outputLabel for="videolinklabel" value="Video Link"/>
+                                <p:inputText value="#{eventsController.videolink}" maxlength="20"
+                                             id="videolinkid" required="true" label="videolinklabel"
+                                             styleClass="input-field" size="30">
+                                </p:inputText>
+                                <h:outputLabel for="videoexpl" value="Video Explanation"/>
+                                <p:inputText value="#{eventsController.explanation}" maxlength="20"
+                                             id="videoexplid" label="videoexpl"
+                                             styleClass="input-field" size="30">
+                                </p:inputText>
+
+                                <p:row></p:row>
+                                <p:row>
+                                    <p:column colspan="2">
+                                        <p:commandButton action="#{eventsController.addVideo()}" update="videosForm"
+                                                         ajax="true" process="@form"
+                                                         value="Add Video"></p:commandButton>
+                                    </p:column>
+                                </p:row>
+
+                            </h:panelGrid>
+                        </h:form>
+
+                    </p:tab>
+                    <p:tab title="Your Fan List">
+                        <h:form>
+                            <p:dataTable id="fanlisttable" paginator="true"
+                                         value="#{fanController.fanListMethod( userController.username )}"
+                                         var="fanlist" editable="false" sortBy="#{fanlist.fandate}"
+                                         sortOrder="ASCENDING"
+                                         emptyMessage="No Fan Found... Make Some :D">
+
+                                <p:column id="fanname" headerText="Fan Name">
+                                    <h:outputText value="#{fanlist.whois}"></h:outputText>
+                                </p:column>
+                                <p:column id="sincewhen" headerText="Since When">
+                                    <h:outputText value="#{fanlist.fandate}"></h:outputText>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="Send Thanks To Your Fan"
+                                                     id="sendthanks"
+                                                     actionListener="#{fanController.sendThanks(fanlist.whois)}">
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+                        </h:form>
+                    </p:tab>
+
+                </p:tabView>
+            </c:when>
+
+            <c:otherwise>
+                <h:outputText value="FORBIDDEN AREA" style="color: red"/>
+            </c:otherwise>
+
+        </c:choose>
+    </ui:define>
+
+</ui:composition>

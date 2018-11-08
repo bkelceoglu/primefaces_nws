@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/nws/nws.iml" filepath="$PROJECT_DIR$/nws/nws.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nws-chat/nws-chat.iml" filepath="$PROJECT_DIR$/nws-chat/nws-chat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nws-jaxrs/nws-jaxrs.iml" filepath="$PROJECT_DIR$/nws-jaxrs/nws-jaxrs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent.iml" filepath="$PROJECT_DIR$/parent.iml" />
+    </modules>
+  </component>
+</project>

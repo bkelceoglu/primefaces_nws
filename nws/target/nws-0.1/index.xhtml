@@ -1,0 +1,140 @@
+<ui:composition template="/WEB-INF/temps/maintemp.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="centerContent">
+        <h:form style="border: none">
+            <p:panelGrid columns="1" id="videoPanel"
+                         style="align-self: center; align-content: center; border-style: hidden; vertical-align: top">
+
+                <p:panelGrid columns="2" id="iframePanel">
+                    <p:column>
+                        <ui:param name="urltolive"
+                                  value="https://www.youtube.com/embed/YPYGeELPpno"></ui:param>
+                        <ui:param name="artistonline" value="beyazit"></ui:param>
+
+                        <iframe width="500px" height="250px" src="#{urltolive}" frameborder="0"
+                                allowfullscreen="true"></iframe>
+                        <p:panel>
+                            <div id="fb-root"></div>
+                            <script>
+                                (function (d, s, id) {
+                                    var js, fjs = d.getElementsByTagName(s)[0];
+                                    if (d.getElementById(id))
+                                        return;
+                                    js = d.createElement(s);
+                                    js.id = id;
+                                    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&amp;version=v2.8&amp;appId=666730200168479";
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }(document, 'script', 'facebook-jssdk'));
+                            </script>
+
+                            <div class="fb-like" data-href="#{urltolive}" data-width="100"
+                                 data-layout="button_count" data-action="like" data-size="large"
+                                 data-show-faces="true" data-share="true"></div>
+
+                            <p:commandButton value="Tip 1$"
+                                             style="float: right; border-radius:50px; font-size: 12px;"></p:commandButton>
+                            <p:commandButton value="Tip 5$"
+                                             style="float: right; border-radius:50px; font-size: 12px;"></p:commandButton>
+                            <p:commandButton value="Tip 10$"
+                                             style="float: right; border-radius:50px; font-size: 12px;"></p:commandButton>
+
+                        </p:panel>
+                    </p:column>
+                    <p:column>
+                        <p:dataList value="#{eventsController.fetchVideos(artistonline)}" var="onlineartist"
+                                    type="ordered" style="font-size: 10px;">
+                            <f:facet name="header">
+                                <h:graphicImage library="images" name="youtube.png" height="45px"/>
+                            </f:facet>
+                            <h:outputLink value="http://www.youtube.com" target="_blank">
+                                #{onlineartist.videoname}
+                            </h:outputLink>
+                        </p:dataList>
+                    </p:column>
+                </p:panelGrid>
+
+
+            </p:panelGrid>
+            <p:panel>
+                ADVERTISE HERE
+            </p:panel>
+            <p:panel header="Chat Panel" style="height:400px">
+                <ui:remove>
+                    <object width="536" height="327" id="_71837042"
+                            data="http://player.netromedia.com/flowplayer.commercial-3.1.5.swf"
+                            type="application/x-shockwave-flash">
+                        <param name="movie" value=""/>
+                        <param name="allowfullscreen" value="true"/>
+                        <param name="allowscriptaccess" value="always"/>
+                        <param name="flashvars"
+                               value='config={"key":"#$73f1e392784f1491601",
+                               "clip":{"autoPlay":true,
+                               "autoBuffering":true,"accelerated":true,
+                               "url":"netro",
+                               "provider":"netromedia",
+                               "metaData":false},
+                               "plugins":{"netromedia":{"url":"flowplayer.rtmp-3.1.3.swf",
+                               "netConnectionUrl":"rtmp://internalvideo.netromedia.com/netro"}}}'/>
+                    </object>
+                </ui:remove>
+                <ui:remove>
+                    <div id="live" style="width:644px;height:276px;margin:0 auto;text-align:center">
+                        <img src="/media/img/player/splash_black.jpg"
+                             height="276" width="548" style="cursor:pointer"/>
+                    </div>
+                </ui:remove>
+
+                <video autoplay="true"></video>
+                <script>
+
+                    var errorCallback = function (e) {
+                        console.log('Reeeejected!', e);
+                    };
+
+                    // Not showing vendor prefixes.
+                    navigator.getUserMedia({video: true, audio: true}, function (localMediaStream) {
+                        var video = document.querySelector('video');
+                        video.src = window.URL.createObjectURL(localMediaStream);
+
+                        // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
+                        // See crbug.com/110938.
+                        video.onloadedmetadata = function (e) {
+                            // Ready to go. Do some stuff.
+                        };
+                    }, errorCallback);
+                </script>
+                <script>
+
+                    $f("live", "http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf", {
+
+                        clip: {
+                            url: '',
+                            live: true,
+                            // configure clip to use influxis as our provider, it uses our rtmp plugin
+                            provider: 'influxis'
+                        },
+
+                        // streaming plugins are configured under the plugins node
+                        plugins: {
+
+                            // here is our rtpm plugin configuration
+                            influxis: {
+                                url: "flowplayer.rtmp-3.2.13.swf",
+
+                                // netConnectionUrl defines where the streams are found
+                                netConnectionUrl: 'rtmp://cyzy7r959.rtmphost.com/flowplayer'
+                            }
+                        }
+                    });
+                </script>
+
+            </p:panel>
+
+
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="nws:war">
+    <output-path>$PROJECT_DIR$/nws/target</output-path>
+    <root id="archive" name="nws-0.1.war">
+      <element id="artifact" artifact-name="nws:war exploded" />
+    </root>
+  </artifact>
+</component>

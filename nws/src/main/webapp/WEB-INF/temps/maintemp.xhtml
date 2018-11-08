@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>NWS</title>
+
+</h:head>
+<h:body>
+    <h:outputStylesheet name="style.css"/>
+    <h:outputScript library="js" name="flowplayer-3.2.13.js"/>
+
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '666730200168479',
+                xfbml: true,
+                version: 'v2.8'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <p:layout fullPage="true">
+        <p:layoutUnit position="north" resizable="false">
+            <ui:include src="/WEB-INF/temps/headerBar.xhtml"></ui:include>
+        </p:layoutUnit>
+        <p:layoutUnit position="west" size="300" collapsible="true" header="Events">
+            <ui:include src="/WEB-INF/temps/vote.xhtml"></ui:include>
+        </p:layoutUnit>
+        <p:layoutUnit position="east" size="300" collapsible="true" header="Events">
+            ADVERTISE HERE
+        </p:layoutUnit>
+
+
+        <p:layoutUnit position="center">
+            <ui:insert name="centerContent"></ui:insert>
+        </p:layoutUnit>
+    </p:layout>
+</h:body>
+</html>

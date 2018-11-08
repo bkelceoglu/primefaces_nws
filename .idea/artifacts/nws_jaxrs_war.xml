@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="nws-jaxrs:war">
+    <output-path>$PROJECT_DIR$/nws-jaxrs/target</output-path>
+    <root id="archive" name="nws-jaxrs-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="nws-jaxrs:war exploded" />
+    </root>
+  </artifact>
+</component>

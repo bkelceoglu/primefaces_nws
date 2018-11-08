@@ -1,0 +1,111 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:form id="navbar">
+        <p:panelGrid columns="8" style="height: 10px; width: 100%;">
+            <p:button id="firstDay" value="#{eventsController.timeLineHeader(0)}"
+                      style="border-radius:50px;">
+                <p:overlayPanel for="firstDay" showEvent="mouseover"
+                                appendToBody="true" hideEvent="mouseout" hideEffect="fade">
+                    <p:dataGrid columns="1" paginator="false"
+                                value="#{eventsController.fetchEventofDay('firstDay')}"
+                                var="firstday" emptyMessage="No Event Found">
+                        <h:outputText
+                                value="Performer: #{firstday.usermodel.username}: Event: #{firstday.eventname}: / #{firstday.starttime}">
+                        </h:outputText>
+                    </p:dataGrid>
+                </p:overlayPanel>
+            </p:button>
+            <p:button id="secondDay"
+                      value="#{eventsController.timeLineHeader(1)}"
+                      style="border-radius:50px;">
+                <p:overlayPanel for="secondDay" showEvent="mouseover"
+                                appendToBody="true" hideEvent="mouseout" hideEffect="fade">
+                    <p:dataGrid columns="1" paginator="false"
+                                value="#{eventsController.fetchEventofDay('secondDay')}"
+                                var="secondday">
+                        <h:outputText
+                                value="#{secondday.usermodel.username} : #{secondday.eventname} / #{secondday.starttime}">
+                        </h:outputText>
+                    </p:dataGrid>
+                </p:overlayPanel>
+            </p:button>
+            <p:button id="thirdDay" value="#{eventsController.timeLineHeader(2)}"
+                      style="border-radius:50px;">
+                <p:overlayPanel for="thirdDay" showEvent="mouseover"
+                                appendToBody="true" hideEvent="mouseout" hideEffect="fade">
+                    <p:dataGrid columns="1" paginator="false"
+                                value="#{eventsController.fetchEventofDay('thirdDay')}"
+                                var="thirdday">
+                        <h:outputText
+                                value="#{thirdday.usermodel.username} : #{thirdday.eventname} / #{thirdday.starttime}">
+                        </h:outputText>
+                    </p:dataGrid>
+                </p:overlayPanel>
+            </p:button>
+            <p:button id="fourthDay"
+                      value="#{eventsController.timeLineHeader(3)}"
+                      style="border-radius:50px;">
+                <p:overlayPanel for="fourthDay" showEvent="mouseover"
+                                appendToBody="true" hideEvent="mouseout" hideEffect="fade">
+                    <p:dataGrid columns="1" paginator="false"
+                                value="#{eventsController.fetchEventofDay('fourthDay')}"
+                                var="fourthday">
+                        <h:outputText
+                                value="#{fourthday.usermodel.username} : #{fourthday.eventname} / #{fourthday.starttime}">
+                        </h:outputText>
+                    </p:dataGrid>
+                </p:overlayPanel>
+            </p:button>
+            <p:button id="fifthDay" value="#{eventsController.timeLineHeader(4)}"
+                      style="border-radius:50px;">
+                <p:overlayPanel for="fifthDay" showEvent="mouseover"
+                                appendToBody="true" hideEvent="mouseout" hideEffect="fade">
+                    <p:dataGrid columns="1" paginator="false"
+                                value="#{eventsController.fetchEventofDay('fifthDay')}"
+                                var="fifthday">
+                        <h:outputText
+                                value="#{fifthday.usermodel.username} : #{fifthday.eventname} / #{fifthday.starttime}">
+                        </h:outputText>
+                    </p:dataGrid>
+                </p:overlayPanel>
+            </p:button>
+            <p:button id="sixthDay" value="#{eventsController.timeLineHeader(5)}"
+                      style="border-radius:50px;">
+                <p:overlayPanel for="sixthDay" showEvent="mouseover"
+                                appendToBody="true" hideEvent="mouseout" hideEffect="fade">
+                    <p:dataGrid columns="1" paginator="false"
+                                value="#{eventsController.fetchEventofDay('sixthDay')}"
+                                var="sixthday">
+                        <h:outputText
+                                value="#{sixthday.usermodel.username} : #{sixthday.eventname} / #{sixthday.starttime}">
+                        </h:outputText>
+                    </p:dataGrid>
+                </p:overlayPanel>
+            </p:button>
+            <p:button id="seventhDay"
+                      value="#{eventsController.timeLineHeader(6)}"
+                      style="border-radius:50px;">
+                <p:overlayPanel for="seventhDay" showEvent="mouseover"
+                                appendToBody="true" hideEvent="mouseout" hideEffect="fade">
+                    <p:dataGrid columns="1" paginator="false"
+                                value="#{eventsController.fetchEventofDay('seventhDay')}"
+                                var="seventhday">
+                        <h:outputText
+                                value="#{seventhday.usermodel.username} : #{seventhday.eventname} / #{seventhday.starttime}">
+                        </h:outputText>
+                    </p:dataGrid>
+                </p:overlayPanel>
+            </p:button>
+
+            <p:button outcome="/schedule.xhtml" value="Click For All"
+                      style="border-radius:50px; background: red"></p:button>
+
+
+        </p:panelGrid>
+    </h:form>
+</ui:composition>

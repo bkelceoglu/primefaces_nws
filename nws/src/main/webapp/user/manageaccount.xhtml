@@ -1,0 +1,26 @@
+<ui:composition template="/WEB-INF/temps/maintemp.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="centerContent">
+
+        <h:form>
+
+            <c:choose>
+
+                <c:when test="#{not empty sessionScope['userObject'].username}">
+
+                </c:when>
+
+                <c:otherwise>
+                    <h:outputText value="FORBIDDEN AREA" style="color: red"/>
+                </c:otherwise>
+
+            </c:choose>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

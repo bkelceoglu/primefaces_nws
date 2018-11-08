@@ -1,0 +1,46 @@
+<ui:composition template="/WEB-INF/temps/maintemp.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="centerContent">
+        <h:form>
+            <p:panel id="searchpanel" header="Search For Events">
+                <p:messages for="searchpanelmessage" showDetail="true"/>
+                <p:panelGrid columns="2" style="width: calc(100% - 300px)">
+                    <p:column>Select One:</p:column>
+                    <p:column>
+                        <p:selectOneMenu id="artist"
+                                         value="#{eventsController.artistUserName}" style="width: 100%">
+                            <f:selectItem itemLabel="Select Artist" noSelectionOption="true"></f:selectItem>
+                            <f:selectItems value="#{voteController.artistListUserName }"></f:selectItems>
+                        </p:selectOneMenu>
+                    </p:column>
+                    <p:column></p:column>
+                    <p:column>
+                        <p:commandButton value="SEARCH" process="@form"
+                                         actionListener="#{eventsController.fetchEventForSearch()}"
+                                         update="dialogid searchpanel"></p:commandButton>
+                    </p:column>
+                </p:panelGrid>
+            </p:panel>
+
+            <p:dialog id="dialogid" header="List of Events For Selected" widgetVar="dlgforart" minHeight="100">
+                <p:dataList value="#{eventsController.eventsForSelectedArtist}" var="ev">
+                    #{ev.eventdate} :: #{ev.eventname} :: #{ev.eventtype}
+                </p:dataList>
+            </p:dialog>
+
+        </h:form>
+        <h:form id="scheduleform">
+            <p:panel header="ALL EVENTS FOR THE MONTH">
+                <p:schedule id="allevents"
+                            value="#{eventsController.allEventsModel()}" timeZone="GMT"
+                            widgetVar="allevents"
+                            draggable="false">
+                </p:schedule>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

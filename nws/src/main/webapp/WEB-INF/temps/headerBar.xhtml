@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <p:growl id="growl" life="3000"/>
+    <p:panelGrid columns="2" style="width:100%; border:none">
+
+        <p:column style="border:none" width="30%">
+            <h:link outcome="/index">
+                <h:graphicImage library="images" name="NOWHERESTAGE.png"
+                                style="height: 100px;align: left;"/>
+            </h:link>
+        </p:column>
+        <p:column>
+            <h:form style="background-color: #99ccff; border-style: hidden">
+
+                <p:growl id="growl" life="3000"/>
+                <c:choose>
+
+                    <c:when test="#{not empty sessionScope['userObject'].username}">
+
+                        <div id="logdedinstatus" style="float: right; font-size: 9px;">
+                            <h:panelGrid columns="3" cellpadding="2"
+                                         style="float: right; font-size: 9px;">
+
+                                <h:outputText
+                                        value="Welcome #{sessionScope['userObject'].username}"
+                                        style="padding: 2px;"/>
+
+                                <p:commandButton id="logoutButton" value="Logout" ajax="true"
+                                                 actionListener="#{userController.logoutUser}"
+                                                 style="float: right; padding: 2px" update="growl"/>
+
+                                <p:button outcome="/user/userhome" value="Your Home"></p:button>
+
+                            </h:panelGrid>
+
+                        </div>
+                    </c:when>
+
+                    <c:otherwise>
+                        <div id="panelGridID">
+
+                            <h:panelGrid columns="7" cellpadding="2"
+                                         style="float: right; font-size: 9px;">
+                                <h:form>
+                                    <p:messages for="loginmessage" showDetail="true"/>
+                                    <p:growl id="growl" life="3000"/>
+                                    <h:outputLabel for="username" value="Username:"
+                                                   style="padding: 2px;"/>
+                                    <p:inputText id="username" value="#{userController.username}"
+                                                 required="true" label="username" style="padding: 2px;"/>
+                                    <h:outputLabel for="password" value="Password:"/>
+                                    <p:password id="password" value="#{userController.password}"
+                                                required="true" label="password" style="padding: 2px;"/>
+                                    <p:commandButton value="Login" ajax="true"
+                                                     actionListener="#{userController.checkUserLogin}"
+                                                     update="growl" style="padding: 2px;"/>
+
+                                </h:form>
+                                <h:form>
+                                    <p:button outcome="/userregister" value="Sign Up"
+                                              style="padding: 2px;"/>
+                                </h:form>
+
+
+                            </h:panelGrid>
+                        </div>
+                    </c:otherwise>
+
+                </c:choose>
+                <div style="font-size: 12px; align: center">
+                    <ui:include src="/WEB-INF/temps/timeline.xhtml"></ui:include>
+                </div>
+
+            </h:form>
+        </p:column>
+
+    </p:panelGrid>
+</ui:composition>
